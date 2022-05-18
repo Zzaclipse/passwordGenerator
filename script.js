@@ -1,68 +1,102 @@
-//
-// GLOBAL VARIABLES
-//
+// creates an array of special characters
+var specChar = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "-", "[", "]", ";", "{", "}", "<", ">", "?", "/"];
+// creates an array of numeric charecters
+var numChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+// creates an array of uppercase characters
+var upperChar = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+// creates an array of lowercase characters
+var lowerChar = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-// Create an array of special characters and store to a variable
 
-// Create an array of numeric charecters and store it to a variable
+function getInput(){
 
-// Create an array of uppercase characters and store it to a variable
+  //prompts user for desired password length and converts to an int and returns int. if password is <8 or >128 it will alert with error message and start again.
+  function getPasswordLength(){  
+    var passLength = prompt("How many characters should the password be?");
+    passLength = parseInt(passLength);
 
-// Ccreate an array of lowercase characters and store it to a variable
+    if(passLength<8 || passLength>128){
+      alert("Password length must be greater than 8 and less than 128. Restarting prompt.");
+      passLength=getPasswordLength();
+      return passLength;
+    } 
+    else{
+      return passLength;
+    }
+  }
+  var PL=getPasswordLength();
+  
+  //prompts user if they want to include special, number, uppercase and lowercase characters. if none are selected it will alert with error message and start again. returns an array of 4 booleans 
+  function includeWhatChars(){
+    var includeWhatCharsArray = [false, false, false, false];
+    includeWhatCharsArray[0] = confirm("Include special characters?");
+    includeWhatCharsArray[1] = confirm("Include number characters?");
+    includeWhatCharsArray[2] = confirm("Include uppercase characters?");
+    includeWhatCharsArray[3] = confirm("Include lowercase characters?");
+    
+    if(includeWhatCharsArray[0]==false && includeWhatCharsArray[1]==false && includeWhatCharsArray[2]==false && includeWhatCharsArray[3]==false){
+      alert("At least one character type must be selected. Restarting prompts.");
+      includeWhatCharsArray = includeWhatChars();
+      return includeWhatCharsArray;
+    }
+    else{
+      return includeWhatCharsArray;
+    }
+  }
+  var IWC = includeWhatChars();
 
-// ==========================================
-// Function to get options from user input
-// ==========================================
-// Store the length of password from user input to a variable and convert it to an interger
 
-// Store the confirmation to include special characters from user input to a variable
+// creates an object to store all the values of user input
+  var inputInclude = {
+      includeSpec: IWC[0],
+      includeNum:  IWC[1],
+      includeUpper: IWC[2],
+      includeLower: IWC[3],
+      pLength: PL
+  }
+  return inputInclude;
+}
 
-// Store the confirmation to include numeric characters from user input to a variable
+function generatePassword(){
+  var include = getInput();
+  console.log(include);
 
-// Store the confirmation to include uppercase characters from user input to a variable
+  // two empty arrays declared to be populated below
+  var possibleChars = [];
+  var passwordArray = [];
 
-// Store the confirmation to include lowercase characters from user input to a variable
+  // if user wants special characters this will be true and add all special characters to the possibleChar array
+  if(include.includeSpec){
+    possibleChars = possibleChars.concat(specChar);
+  }
 
-// Create an object to store all the values of user input
+  // if user wants number characters this will be true and add all number characters to the possibleChar array
+  if(include.includeNum){
+    possibleChars = possibleChars.concat(numChar);
+  }
 
-// return the object to the caller
+  // if user wants uppercase characters this will be true and add all uppercase characters to the possibleChar array
+  if(include.includeUpper){
+    possibleChars = possibleChars.concat(upperChar);
+  }
 
-// =================================================
-// Function to generate password - generatePassword
-// =================================================
-// Call user option function and store the return object to a variable
+  // if user wants lowercase characters this will be true and add all lowercase characters to the possibleChar array
+  if(include.includeLower){
+    possibleChars = possibleChars.concat(lowerChar);
+  }
+  
+  //for loop that will end when password reaches desired length from the user. will populate passwordArray with random character from created possibleChars array
+  for(var i=0; i<include.pLength; i++){
+    passwordArray[i]=possibleChars[Math.floor(Math.random() * possibleChars.length)]
+  }
 
-// If the retured object does not exist, return null to the caller to exit the function
+  // converts array in to a string with no commas
+  var passwordString = passwordArray.join("");
 
-// Create a varialbe to be assigned with an empty array initially, to be populated by concatenating
-// all posiible character sets chosen by user
+  // returns password string
+  return passwordString;
+}
 
-// Create a variable to be assigned with an empty array initially, to be populated with one character
-// from all character sets chosen by user.
-// It is to guarrantee that at least one character from the chosen character set will be included in password
-
-// Create a variable to be assigned with an empty array initially, to be populated with password
-
-// Create a conditional statement: 1) to add array of special characters into array of possible characters based on user input
-// 2) to push a random special character to the array of guaranteed characters
-
-// Create a conditional statement: 1) to add array of numeric characters into array of possible characters based on user input
-// 2) to push a random numeric character to the array of guaranteed characters
-
-// Create a conditional statement: 1) to add array of uppercase characters into array of possible characters based on user input
-// 2) to push a random uppercase character to the array of guaranteed characters
-
-// Create a conditional statement: 1) to add array of lowercase characters into array of possible characters based on user input
-// 2) to push a random lowercase character to the array of guaranteed characters
-
-// For loop to iterate over the password length from the retuned object of options based on user input,
-// selecting random indices from the array of possible characters and adding those characters into the password array variable
-
-// For loop to iterate over the length of the guaranteed array, replacing the first few characters in the password array with the characters in the guarantee array
-
-// Convert the password array into password string
-
-// Return the converted password string to the caller
 
 
 // Get references to the #generate element
