@@ -16,7 +16,7 @@ function getInput(){
     passLength = parseInt(passLength);
 
     if(passLength<8 || passLength>128){
-      alert("Password length must be greater than 8 and less than 128. Restarting prompt.");
+      alert("Password length must be at least 8 and less than 128. Restarting prompt.");
       passLength=getPasswordLength();
       return passLength;
     } 
@@ -24,7 +24,7 @@ function getInput(){
       return passLength;
     }
   }
-  var PL=getPasswordLength();
+  var pl=getPasswordLength();
   
   //prompts user if they want to include special, number, uppercase and lowercase characters. if none are selected it will alert with error message and start again. returns an array of 4 booleans 
   function includeWhatChars(){
@@ -43,23 +43,22 @@ function getInput(){
       return includeWhatCharsArray;
     }
   }
-  var IWC = includeWhatChars();
+  var iwc = includeWhatChars();
 
 
 // creates an object to store all the values of user input
   var inputInclude = {
-      includeSpec: IWC[0],
-      includeNum:  IWC[1],
-      includeUpper: IWC[2],
-      includeLower: IWC[3],
-      pLength: PL
+      includeSpec: iwc[0],
+      includeNum:  iwc[1],
+      includeUpper: iwc[2],
+      includeLower: iwc[3],
+      pLength: pl
   }
   return inputInclude;
 }
 
 function generatePassword(){
   var include = getInput();
-  console.log(include);
 
   // two empty arrays declared to be populated below
   var possibleChars = [];

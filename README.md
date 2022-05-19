@@ -1,6 +1,6 @@
 # passwordGenerator
 
-when generate password button is pressed you are gicen a series of prompts
+when generate password button is pressed you are given a series of prompts
 
 first the number of characters is asked for, if <8 or >128 it will restart the prompt
 
